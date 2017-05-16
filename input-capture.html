@@ -8,10 +8,11 @@
 </head>
 <body style="padding: 0; margin: 0; background-color: black">
 <label id="takePhotoLabel">
-    <img src="take_photo.svg" style="width:10rem;height:10rem;">
+    <img src="take_photo.svg"
+         style="width:10rem;height:10rem;cursor: pointer;position: absolute;bottom: 0;left: calc(50% - 5rem);">
     <input id="takePhoto" type="file" name="image" accept="image/*" capture="environment" style="display: none">
 </label>
-<ol id="photos" style="padding: 0"></ol>
+<ol id="photos" style="padding: 0;margin: 0"></ol>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
