@@ -6,48 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Web camera example</title>
 </head>
-<body>
-<video autoplay></video>
-<button onclick="snapshot()">snapshot</button>
-<img src="">
-<canvas style="display:none;"></canvas>
+<body style="padding: 0; margin: 0; background-color: black">
+<video id="cameraFeed" style="display: block; width: 85%; height: 100vh;" autoplay></video>
+<!--<button id="takePhoto" style="display: block; width: 640px; height: 50px">take photo</button>-->
+<ol id="photos" style="list-style: none;padding: 0;width: 15%;position: absolute;display: block;right: 0;top: 0;height: 100vh;overflow: scroll;margin:0">
+</ol>
+<canvas style="display:none;" width="640" height="480"></canvas>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
 <script>
-    var errorCallback = function (e) {
-        console.log('Rejected!', e)
-    }
+    $.when($.ready).then(function () {
+        var errorCallback = function (e) {
+            console.log('Rejected!', e)
+        }
 
-    function hasGetUserMedia() {
-        return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia)
-    }
+        function hasGetUserMedia() {
+            return !!(navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia)
+        }
 
-    if (hasGetUserMedia()) {
-        navigator.getUserMedia = navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia
+        if (hasGetUserMedia()) {
+            navigator.getUserMedia = navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia
 
-        var video = document.querySelector('video')
-        var canvas = document.querySelector('canvas')
-        var ctx = canvas.getContext('2d')
-        var localMediaStream = null
+            var video = document.querySelector('video')
+            var canvas = document.querySelector('canvas')
+            var ctx = canvas.getContext('2d')
+            var localMediaStream = null
 
-        function snapshot() {
-            if (localMediaStream) {
-                ctx.drawImage(video, 0, 0)
-                // "image/webp" works in Chrome. Other browsers will fall back to image/png.
-                document.querySelector('img').src = canvas.toDataURL('image/webp')
+            function snapshot() {
+                if (localMediaStream) {
+                    ctx.drawImage(video, 0, 0, 640, 480)
+                    // "image/webp" works in Chrome. Other browsers will fall back to image/png.
+                    $("#photos").append('<li><img src="' + canvas.toDataURL('image/webp') + '" width="320px" height="240px"></li>');
+                }
             }
-        }
 
-        if (navigator.getUserMedia) {
-            navigator.getUserMedia({video: true}, function (stream) {
-                video.src = window.URL.createObjectURL(stream)
-                localMediaStream = stream
-            }, errorCallback)
+            $("#cameraFeed").click(snapshot)
+
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia({video: true}, function (stream) {
+                    video.src = window.URL.createObjectURL(stream)
+                    localMediaStream = stream
+                }, errorCallback)
+            }
+        } else {
+            alert('getUserMedia() is not supported in your browser')
         }
-    } else {
-        alert('getUserMedia() is not supported in your browser')
-    }
+    })
 </script>
 </body>
 </html>
