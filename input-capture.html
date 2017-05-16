@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Web camera example</title>
+</head>
+<body style="padding: 0; margin: 0; background-color: black; overflow: hidden">
+<input id="takePhoto" type="file" name="image" accept="image/*" capture="environment">
+<ol id="photos"></ol>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script>
+    $.when($.ready).then(function () {
+        var camera = document.getElementById('takePhoto');
+
+        camera.addEventListener('change', function (e) {
+            var file = e.target.files[0];
+            var imgURL = URL.createObjectURL(file),
+                img = document.createElement('img');
+
+            img.onload = function () {
+                URL.revokeObjectURL(imgURL);
+            };
+
+            img.src = imgURL;
+            $("#photos").append(img);
+        });
+    })
+</script>
+</body>
+</html>
