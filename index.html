@@ -7,11 +7,11 @@
     <title>Web camera example</title>
 </head>
 <body style="padding: 0; margin: 0; background-color: black">
-<video id="cameraFeed" style="display: block; width: 85%; height: 100vh;" autoplay></video>
+<video id="cameraFeed" style="display: block;position: absolute;width: 85%;height: 100vh;left: 15%;" autoplay></video>
 <!--<button id="takePhoto" style="display: block; width: 640px; height: 50px">take photo</button>-->
-<ol id="photos" style="list-style: none;padding: 0;width: 15%;position: absolute;display: block;right: 0;top: 0;height: 100vh;overflow: scroll;margin:0">
+<img id="overlay" src="overlay.svg" style="top: 0;left: 15%;position: absolute;width: 85%;height: 100vh;">
+<ol id="photos" style="list-style: none;padding: 0;width: 15%;position: absolute;display: block;left: 0;top: 0;height: 100vh;overflow: scroll;margin:0;">
 </ol>
-<img id="overlay" src="overlay.svg" style="top: 0; left: 0; position: absolute; width: 85%; height: 100vh">
 <canvas style="display:none;" width="640" height="480"></canvas>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
