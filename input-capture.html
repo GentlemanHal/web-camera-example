@@ -6,27 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Web camera example</title>
 </head>
-<body style="padding: 0; margin: 0; background-color: black; overflow: hidden">
+<body style="padding: 0; margin: 0; background-color: black">
 <input id="takePhoto" type="file" name="image" accept="image/*" capture="environment">
-<ol id="photos"></ol>
+<ol id="photos" style="padding: 0"></ol>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
 <script>
     $.when($.ready).then(function () {
-        var camera = document.getElementById('takePhoto');
-
-        camera.addEventListener('change', function (e) {
+        $('#takePhoto').change(function (e) {
             var file = e.target.files[0];
-            var imgURL = URL.createObjectURL(file),
-                img = document.createElement('img');
+            var imgURL = URL.createObjectURL(file);
+            var img = document.createElement('img');
 
             img.onload = function () {
                 URL.revokeObjectURL(imgURL);
             };
 
-            img.src = imgURL;
-            $("#photos").append(img);
+            $("#photos").append('<li style="display: inline-block; width: 33%;"><img src="' + imgURL + '" width="100%"></li>');
         });
     })
 </script>
